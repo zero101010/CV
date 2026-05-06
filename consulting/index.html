@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igor Araujo — DevOps & MLOps Consulting</title>
+    <meta name="description" content="Expert DevOps & MLOps consulting. Reduce cloud costs, accelerate deployments, and build production-ready ML infrastructure. 7+ years of hands-on experience.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            --text-primary: #e8e8ed;
+            --text-secondary: #9494a3;
+            --text-muted: #5e5e6e;
+            --accent: #7c5cfc;
+            --accent-light: #9b7fff;
+            --accent-glow: rgba(124, 92, 252, 0.15);
+            --accent-secondary: #00d4aa;
+            --accent-tertiary: #ff6b6b;
+            --border: #1e1e2a;
+            --border-light: #2a2a3a;
+            --gradient-1: linear-gradient(135deg, #7c5cfc, #00d4aa);
+            --gradient-2: linear-gradient(135deg, #7c5cfc, #ff6b6b);
+            --gradient-3: linear-gradient(135deg, #00d4aa, #7c5cfc);
+            --rust: #bf5b45;
+            --rust-glow: rgba(191, 91, 69, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.85);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            padding: 0.55rem 1.25rem !important;
+            background: var(--gradient-1) !important;
+            color: #fff !important;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.3);
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta::after { display: none !important; }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(124, 92, 252, 0.5); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px; height: 2px;
+            background: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.75rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(124, 92, 252, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(124, 92, 252, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-lg {
+            padding: 1rem 2.25rem;
+            font-size: 1.05rem;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 900px; height: 900px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: var(--accent-glow);
+            border: 1px solid rgba(124, 92, 252, 0.3);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent-light);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .eyebrow .pulse {
+            width: 8px; height: 8px;
+            background: var(--accent-secondary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.08;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-text h1 .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 540px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Hero Visual — terminal card */
+        .hero-visual { display: flex; justify-content: center; position: relative; }
+
+        .hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 17px;
+            background: var(--gradient-1);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .terminal-bar { display: flex; gap: 6px; margin-bottom: 1rem; }
+        .terminal-bar span { width: 10px; height: 10px; border-radius: 50%; }
+        .terminal-bar span:nth-child(1) { background: #ff5f57; }
+        .terminal-bar span:nth-child(2) { background: #febc2e; }
+        .terminal-bar span:nth-child(3) { background: #28c840; }
+
+        .terminal-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+
+        .terminal-line { display: flex; gap: 0.5rem; }
+        .terminal-prompt { color: var(--accent-secondary); user-select: none; }
+        .terminal-cmd { color: var(--text-primary); }
+        .terminal-output { color: var(--text-secondary); padding-left: 1.2rem; }
+        .terminal-highlight { color: var(--accent-light); }
+        .terminal-success { color: var(--accent-secondary); }
+
+        /* ── Color-block sections (Cosmic Teacups style) ── */
+        .block-section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .block-section .inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .block-dark { background: var(--bg-primary); }
+        .block-elevated { background: var(--bg-secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+        .block-accent {
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.12) 0%, rgba(0, 212, 170, 0.06) 100%);
+            border-top: 1px solid rgba(124, 92, 252, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 170, 0.15);
+        }
+
+        .block-rust {
+            background: linear-gradient(135deg, rgba(191, 91, 69, 0.15) 0%, rgba(255, 107, 107, 0.08) 100%);
+            border-top: 1px solid rgba(191, 91, 69, 0.25);
+            border-bottom: 1px solid rgba(255, 107, 107, 0.15);
+        }
+
+        .block-green {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(124, 92, 252, 0.05) 100%);
+            border-top: 1px solid rgba(0, 212, 170, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 170, 0.1);
+        }
+
+        /* ── Section labels & titles ── */
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        .section-title .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .center-text { text-align: center; }
+        .center-text .section-subtitle { margin-left: auto; margin-right: auto; }
+
+        /* ── Pain Points ── */
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pain-card {
+            background: rgba(255, 107, 107, 0.06);
+            border: 1px solid rgba(255, 107, 107, 0.15);
+            border-radius: 14px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .pain-card .pain-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .pain-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-tertiary);
+        }
+
+        .pain-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ── Offer / Promise Strip ── */
+        .promise-strip {
+            text-align: center;
+            padding: 4.5rem 2rem;
+        }
+
+        .promise-strip h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+        }
+
+        .promise-strip p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        /* ── Services Grid ── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.25rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: var(--border-light);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card .card-icon {
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .icon-infra { background: rgba(124, 92, 252, 0.15); }
+        .icon-cost { background: rgba(0, 212, 170, 0.15); }
+        .icon-mlops { background: rgba(255, 107, 107, 0.15); }
+        .icon-platform { background: rgba(255, 183, 77, 0.15); }
+        .icon-cicd { background: rgba(124, 92, 252, 0.15); }
+        .icon-observe { background: rgba(0, 212, 170, 0.15); }
+
+        .service-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .service-card .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+
+        .service-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+        }
+
+        /* ── Results / Impact ── */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .result-item { text-align: center; }
+
+        .result-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        /* ── Case Studies ── */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .case-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.25rem;
+            transition: all 0.3s;
+        }
+
+        .case-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .case-card .case-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .label-green { background: rgba(0, 212, 170, 0.15); color: var(--accent-secondary); }
+        .label-purple { background: rgba(124, 92, 252, 0.15); color: var(--accent-light); }
+
+        .case-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-card .case-result {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-secondary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .case-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .case-card .case-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+
+        /* ── How I Work / Process ── */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 2rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .process-step:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-light);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .process-step h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-step p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* Arrow connectors between steps (desktop) */
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -0.95rem;
+            width: 12px; height: 12px;
+            border-top: 2px solid var(--border-light);
+            border-right: 2px solid var(--border-light);
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .process-step:last-child::after { display: none; }
+
+        /* ── About / Bio ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 0.4fr 0.6fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .about-photo-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-photo {
+            width: 280px; height: 280px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 3px solid transparent;
+            background-image: var(--gradient-1);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            box-shadow: 0 8px 40px rgba(124, 92, 252, 0.2);
+        }
+
+        .about-content h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .about-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .about-badge {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.75rem;
+            background: var(--accent-glow);
+            border: 1px solid rgba(124, 92, 252, 0.3);
+            border-radius: 6px;
+            color: var(--accent-light);
+            font-weight: 500;
+        }
+
+        /* ── Contact / CTA Section ── */
+        .contact-section {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .contact-section h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .contact-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .contact-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        /* Contact form */
+        .contact-form-wrapper {
+            max-width: 580px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: left;
+        }
+
+        .contact-form-wrapper h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            text-align: center;
+        }
+
+        .contact-form-wrapper .form-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group { margin-bottom: 1rem; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        .form-group select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--gradient-1);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(124, 92, 252, 0.3);
+        }
+
+        .form-submit:hover {
+            box-shadow: 0 6px 30px rgba(124, 92, 252, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .form-note {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        /* ── Contact links row ── */
+        .contact-links-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ── Animations ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── WhatsApp floating button ── */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px; height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4);
+            z-index: 90;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 32px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-visual { order: -1; }
+            .hero-card { max-width: 100%; }
+            .pain-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .cases-grid { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-step::after { display: none; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .about-content { text-align: left; }
+            .form-row { grid-template-columns: 1fr; }
+
+            nav .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: var(--bg-primary);
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 1rem;
+            }
+
+            nav .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-text h1 { font-size: 2rem; }
+            .section-title { font-size: 2rem; }
+            .promise-strip h2 { font-size: 2rem; }
+            .contact-section h2 { font-size: 2rem; }
+            .results-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+            .result-number { font-size: 2rem; }
+            .process-grid { grid-template-columns: 1fr; }
+            .block-section { padding: 3.5rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">igor.consulting</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#cases">Case Studies</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+            </ul>
+            <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="eyebrow">
+                    <span class="pulse"></span>
+                    Accepting new clients
+                </div>
+                <h1>Ship Faster.<br><span class="gradient">Break Less.</span><br>Scale Smarter.</h1>
+                <p class="subtitle">
+                    I help engineering teams cut cloud costs, automate infrastructure,
+                    and build production-ready ML pipelines &mdash; so you can focus on
+                    shipping product instead of fighting your platform.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary btn-lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        Book a Free Consultation
+                    </a>
+                    <a href="https://wa.me/5561999999999" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="terminal-bar">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-cmd">igor consulting --status</span>
+                        </div>
+                        <br>
+                        <div class="terminal-output">
+                            <span class="terminal-highlight">DevOps Consulting</span><br>
+                            &nbsp;&nbsp;cloud-cost-optimization .. <span class="terminal-success">ready</span><br>
+                            &nbsp;&nbsp;kubernetes-platform ..... <span class="terminal-success">ready</span><br>
+                            &nbsp;&nbsp;ci-cd-automation ........ <span class="terminal-success">ready</span><br>
+                            <br>
+                            <span class="terminal-highlight">MLOps Consulting</span><br>
+                            &nbsp;&nbsp;gpu-infrastructure ...... <span class="terminal-success">ready</span><br>
+                            &nbsp;&nbsp;llm-fine-tuning ......... <span class="terminal-success">ready</span><br>
+                            &nbsp;&nbsp;rag-pipelines ........... <span class="terminal-success">ready</span><br>
+                            <br>
+                            <span class="terminal-highlight">Track Record</span><br>
+                            &nbsp;&nbsp;years: <span class="terminal-success">7+</span><br>
+                            &nbsp;&nbsp;cost_saved: <span class="terminal-success">80%</span><br>
+                            &nbsp;&nbsp;services_managed: <span class="terminal-success">100+</span><br>
+                            <br>
+                            <span class="terminal-success">All systems operational.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points -->
+    <div class="block-section block-rust" id="problems">
+        <div class="inner fade-in">
+            <div class="center-text">
+                <div class="section-label">// Sound Familiar?</div>
+                <h2 class="section-title">Your Infrastructure Is <span style="color:var(--accent-tertiary)">Holding You Back</span></h2>
+                <p class="section-subtitle">These are the problems I solve for engineering teams every day.</p>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card fade-in">
+                    <span class="pain-icon">&#128293;</span>
+                    <h3>Cloud Costs Out of Control</h3>
+                    <p>GPU instances running 24/7 with no one using them. Oversized clusters. No cost visibility. Your cloud bill keeps climbing and nobody knows why.</p>
+                </div>
+                <div class="pain-card fade-in">
+                    <span class="pain-icon">&#9203;</span>
+                    <h3>Deployments Take Forever</h3>
+                    <p>Engineers waiting hours for environments. Manual deployments that break on Fridays. No CI/CD confidence. Shipping once a week instead of once a day.</p>
+                </div>
+                <div class="pain-card fade-in">
+                    <span class="pain-icon">&#129504;</span>
+                    <h3>ML Can't Get to Production</h3>
+                    <p>Data scientists training models on laptops. No reproducible environments. GPU provisioning takes days. The gap between experiment and production is a canyon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promise Strip -->
+    <div class="block-section block-accent">
+        <div class="inner promise-strip fade-in">
+            <h2>I turn <span class="gradient">infrastructure chaos</span> into<br>your competitive advantage.</h2>
+            <p>Whether you need to slash cloud spend, accelerate deployments, or get ML models into production &mdash; I bring 7+ years of battle-tested experience to make it happen.</p>
+            <a href="#contact" class="btn btn-primary btn-lg">Let's Talk About Your Challenges</a>
+        </div>
+    </div>
+
+    <!-- Services -->
+    <div class="block-section block-dark" id="services">
+        <div class="inner">
+            <div class="section-header fade-in">
+                <div class="section-label">// What I Do</div>
+                <h2 class="section-title">Consulting <span class="gradient">Services</span></h2>
+                <p class="section-subtitle">End-to-end infrastructure consulting tailored to your team's needs.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="card-icon icon-cost">&#9889;</div>
+                    <h3>Cloud Cost Optimization</h3>
+                    <p>Audit your cloud infrastructure, identify waste, and implement strategies that dramatically reduce spend &mdash; without sacrificing performance or reliability.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">AWS</span>
+                        <span class="service-tag">GCP</span>
+                        <span class="service-tag">Multi-Cloud</span>
+                        <span class="service-tag">FinOps</span>
+                        <span class="service-tag">GPU Optimization</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="card-icon icon-infra">&#128640;</div>
+                    <h3>Kubernetes & Platform Engineering</h3>
+                    <p>Design and build developer platforms on Kubernetes that let your team ship faster. Ephemeral environments, self-service tooling, and golden paths.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">EKS / GKE</span>
+                        <span class="service-tag">Helm</span>
+                        <span class="service-tag">Istio</span>
+                        <span class="service-tag">Platform Engineering</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="card-icon icon-cicd">&#128295;</div>
+                    <h3>CI/CD & Automation</h3>
+                    <p>Build robust deployment pipelines that give your team confidence to ship multiple times a day. GitOps, infrastructure as code, and automated testing.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">GitHub Actions</span>
+                        <span class="service-tag">GitLab CI</span>
+                        <span class="service-tag">Terraform</span>
+                        <span class="service-tag">ArgoCD</span>
+                        <span class="service-tag">GitOps</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="card-icon icon-mlops">&#129302;</div>
+                    <h3>MLOps & AI Infrastructure</h3>
+                    <p>From GPU provisioning to LLM fine-tuning pipelines and RAG systems &mdash; I build the infrastructure that gets your ML models from notebook to production.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">LLM Fine-Tuning</span>
+                        <span class="service-tag">RAG Pipelines</span>
+                        <span class="service-tag">GPU Infra</span>
+                        <span class="service-tag">Runpod</span>
+                        <span class="service-tag">VLLM</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="card-icon icon-observe">&#128200;</div>
+                    <h3>Observability & SRE</h3>
+                    <p>Implement monitoring, alerting, and SLO frameworks so you know exactly what's happening in production &mdash; before your customers do.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Prometheus</span>
+                        <span class="service-tag">Grafana</span>
+                        <span class="service-tag">Datadog</span>
+                        <span class="service-tag">SLI/SLO/SLA</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="card-icon icon-platform">&#9881;</div>
+                    <h3>Infrastructure as Code</h3>
+                    <p>Codify your entire infrastructure for repeatability, auditability, and speed. Terraform modules, custom providers, and multi-environment setups.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Terraform</span>
+                        <span class="service-tag">CloudFormation</span>
+                        <span class="service-tag">Golang</span>
+                        <span class="service-tag">Custom Providers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results / Impact Numbers -->
+    <div class="block-section block-green" id="results">
+        <div class="inner">
+            <div class="center-text fade-in">
+                <div class="section-label">// Proven Results</div>
+                <h2 class="section-title">Numbers That <span class="gradient">Speak</span></h2>
+                <p class="section-subtitle">Real impact delivered for real companies.</p>
+            </div>
+            <div class="results-grid fade-in">
+                <div class="result-item">
+                    <div class="result-number">80%</div>
+                    <div class="result-label">Cloud Cost Reduction</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-number">100+</div>
+                    <div class="result-label">Microservices Managed</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-number">8 min</div>
+                    <div class="result-label">GPU Env Provisioning</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-number">7+</div>
+                    <div class="result-label">Years of Experience</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case Studies -->
+    <div class="block-section block-dark" id="cases">
+        <div class="inner">
+            <div class="section-header fade-in">
+                <div class="section-label">// Case Studies</div>
+                <h2 class="section-title">How I've <span class="gradient">Helped</span></h2>
+                <p class="section-subtitle">Selected engagements that demonstrate measurable business impact.</p>
+            </div>
+            <div class="cases-grid">
+                <div class="case-card fade-in">
+                    <span class="case-label label-green">Cost Optimization</span>
+                    <h3>GPU Infrastructure: $100K to $20K/month</h3>
+                    <div class="case-result">80% cost reduction</div>
+                    <p>An AI company was burning $100K+/month on GCP GPU instances that sat idle most of the time. I evaluated multi-cloud providers, migrated workloads to Runpod, and built automated idle-instance management &mdash; cutting monthly GPU spend by 80%.</p>
+                    <div class="case-stack">
+                        <span class="service-tag">GCP</span>
+                        <span class="service-tag">Runpod</span>
+                        <span class="service-tag">Docker</span>
+                        <span class="service-tag">Automation</span>
+                    </div>
+                </div>
+                <div class="case-card fade-in">
+                    <span class="case-label label-purple">Platform Engineering</span>
+                    <h3>Ephemeral Environments for 100+ Services</h3>
+                    <div class="case-result">Hours reduced to minutes</div>
+                    <p>A health-tech company's developers waited hours for test environments. I built an ephemeral environment platform on Kubernetes &mdash; isolated namespaces per PR, Helm-based deployments, Slack notifications, and automated cleanup.</p>
+                    <div class="case-stack">
+                        <span class="service-tag">Kubernetes</span>
+                        <span class="service-tag">Helm</span>
+                        <span class="service-tag">Slack API</span>
+                        <span class="service-tag">CI/CD</span>
+                    </div>
+                </div>
+                <div class="case-card fade-in">
+                    <span class="case-label label-purple">MLOps</span>
+                    <h3>End-to-End LLM Fine-Tuning Infrastructure</h3>
+                    <div class="case-result">~1 day setup reduced to 8 minutes</div>
+                    <p>Built the entire ML training infrastructure from scratch &mdash; purpose-built Docker images with pre-configured ML packages, persistent data layers with GCP Cloud Storage, and CI/CD pipelines for ML researchers.</p>
+                    <div class="case-stack">
+                        <span class="service-tag">GPU</span>
+                        <span class="service-tag">Docker</span>
+                        <span class="service-tag">GCP Storage</span>
+                        <span class="service-tag">Terraform</span>
+                    </div>
+                </div>
+                <div class="case-card fade-in">
+                    <span class="case-label label-green">AI Engineering</span>
+                    <h3>RAG-Powered Internal Q&A System</h3>
+                    <div class="case-result">Data-driven Q&A for internal teams</div>
+                    <p>Designed and implemented a Retrieval-Augmented Generation pipeline using Python, Qdrant, and LLM APIs to ingest, embed, and query document data &mdash; enabling teams to get instant answers from their own documentation.</p>
+                    <div class="case-stack">
+                        <span class="service-tag">Python</span>
+                        <span class="service-tag">Qdrant</span>
+                        <span class="service-tag">LLM APIs</span>
+                        <span class="service-tag">RAG</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How I Work -->
+    <div class="block-section block-elevated" id="process">
+        <div class="inner">
+            <div class="center-text fade-in">
+                <div class="section-label">// How I Work</div>
+                <h2 class="section-title">A Clear <span class="gradient">Process</span></h2>
+                <p class="section-subtitle">No guesswork. From discovery to delivery, here's how we work together.</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-step fade-in">
+                    <div class="step-number">01</div>
+                    <h3>Discovery Call</h3>
+                    <p>We discuss your current pain points, infrastructure, and goals. I'll be honest about whether I'm the right fit.</p>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="step-number">02</div>
+                    <h3>Audit & Plan</h3>
+                    <p>I dive deep into your systems &mdash; cloud spend, architecture, pipelines &mdash; and deliver an actionable roadmap.</p>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="step-number">03</div>
+                    <h3>Build & Ship</h3>
+                    <p>Hands-on implementation. I build alongside your team, shipping iteratively with measurable milestones.</p>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="step-number">04</div>
+                    <h3>Handoff & Support</h3>
+                    <p>Documentation, knowledge transfer, and ongoing support to ensure your team can own everything long-term.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="block-section block-dark" id="about">
+        <div class="inner">
+            <div class="section-header fade-in">
+                <div class="section-label">// About</div>
+                <h2 class="section-title">Who's Behind <span class="gradient">the Terminal</span></h2>
+            </div>
+            <div class="about-grid fade-in">
+                <div class="about-photo-wrapper">
+                    <img src="igor-sf.jpeg" alt="Igor Araujo" class="about-photo">
+                </div>
+                <div class="about-content">
+                    <h3>Igor Araujo</h3>
+                    <p>
+                        I'm a Senior DevOps & MLOps Engineer with 7+ years of experience building cloud-native
+                        infrastructure for companies in the US, Canada, Spain, and Brazil. I've worked at
+                        companies like <strong>GoodRx</strong>, <strong>Turing</strong>, <strong>Cyral</strong>,
+                        and <strong>IBM</strong>, managing everything from 100+ microservice platforms to
+                        GPU clusters for LLM training.
+                    </p>
+                    <p>
+                        I'm not a theory consultant &mdash; I'm a builder. I write Terraform, deploy Helm charts,
+                        optimize Dockerfiles, and debug production incidents alongside your team. My sweet spot
+                        is the intersection of DevOps and ML: helping teams build the infrastructure that gets
+                        AI from experiment to production.
+                    </p>
+                    <p>
+                        Software Engineering degree from Brasilia University (UNB). Based in Brasilia, Brazil.
+                        Available for remote engagements worldwide.
+                    </p>
+                    <div class="about-badges">
+                        <span class="about-badge">AWS</span>
+                        <span class="about-badge">GCP</span>
+                        <span class="about-badge">Kubernetes</span>
+                        <span class="about-badge">Terraform</span>
+                        <span class="about-badge">Python</span>
+                        <span class="about-badge">Golang</span>
+                        <span class="about-badge">MLOps</span>
+                        <span class="about-badge">LLM Fine-Tuning</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact / CTA -->
+    <div class="block-section block-accent" id="contact">
+        <div class="inner contact-section">
+            <h2 class="fade-in">Let's <span class="gradient">Talk</span></h2>
+            <p class="fade-in">
+                Tell me about your challenges. I'll give you an honest assessment &mdash;
+                even if the answer is "you don't need a consultant."
+            </p>
+
+            <div class="contact-actions fade-in">
+                <a href="https://wa.me/5561999999999" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chat on WhatsApp
+                </a>
+                <a href="mailto:igotaraujo97@gmail.com" class="btn btn-primary btn-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Send an Email
+                </a>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper fade-in">
+                <h3>Or send me a message</h3>
+                <p class="form-subtitle">I'll get back to you within 24 hours.</p>
+                <form action="https://formsubmit.co/igotaraujo97@gmail.com" method="POST">
+                    <!-- FormSubmit config -->
+                    <input type="hidden" name="_subject" value="New Consulting Inquiry from Website">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_template" value="box">
+                    <input type="text" name="_honey" style="display:none">
+                    <input type="hidden" name="_next" value="">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" placeholder="Company name (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">What do you need help with?</label>
+                        <select id="service" name="service">
+                            <option value="">Select a service...</option>
+                            <option value="Cloud Cost Optimization">Cloud Cost Optimization</option>
+                            <option value="Kubernetes & Platform Engineering">Kubernetes & Platform Engineering</option>
+                            <option value="CI/CD & Automation">CI/CD & Automation</option>
+                            <option value="MLOps & AI Infrastructure">MLOps & AI Infrastructure</option>
+                            <option value="Observability & SRE">Observability & SRE</option>
+                            <option value="Infrastructure as Code">Infrastructure as Code</option>
+                            <option value="Other">Other / Not Sure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Tell me about your challenges</label>
+                        <textarea id="message" name="message" placeholder="What are you struggling with? What does success look like?" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Send Message</button>
+                    <p class="form-note">No spam. No sales pitch. Just an honest conversation about your needs.</p>
+                </form>
+            </div>
+
+            <div class="contact-links-row fade-in">
+                <a href="mailto:igotaraujo97@gmail.com" class="contact-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    igotaraujo97@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/igor-ara%C3%BAjo-0b95a0145/" target="_blank" rel="noopener" class="contact-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/zero101010" target="_blank" rel="noopener" class="contact-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Igor Araujo Consulting. Built with purpose.</p>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5561999999999" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // Scroll-triggered fade-in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Close mobile nav on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+            });
+        });
+
+        // Set _next to current page after form submit
+        const form = document.querySelector('form');
+        if (form) {
+            const nextInput = form.querySelector('input[name="_next"]');
+            if (nextInput) nextInput.value = window.location.href;
+        }
+    </script>
+
+</body>
+</html>
